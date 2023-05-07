@@ -59,6 +59,11 @@ resource "aws_iam_role_policy_attachment" "ddbstream_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaDynamoDBExecutionRole"
 }
 
+resource "aws_iam_role_policy_attachment" "cleaner_execution_policy" {
+  role       = aws_iam_role.ddb_cleaner_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 resource "aws_iam_role_policy" "ddb_cleaner_policy" {
   name = "ddb_cleaner_policy"
   role = aws_iam_role.ddb_cleaner_role.name
