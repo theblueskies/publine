@@ -11,7 +11,7 @@ resource "aws_iam_role" "lambda_consumer_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Service = "ec2.amazonaws.com"
+          Service = "lambda.amazonaws.com"
         }
       },
     ]
@@ -36,7 +36,7 @@ resource "aws_iam_role" "ddb_cleaner_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Service = "ec2.amazonaws.com"
+          Service = "lambda.amazonaws.com"
         }
       },
     ]
