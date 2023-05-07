@@ -22,3 +22,13 @@ resource "aws_iam_role" "lambda_consumer_role" {
     Description = "lambda role to consume data from dynamodb streams"
   }
 }
+
+resource "aws_iam_role_policy_attachment" "lambda_execution_policy" {
+    role = aws_iam_role.lambda_consumer_role.name
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole" 
+}
+
+resource "aws_iam_role_policy_attachment" "ddbstream_execution_policy" {
+    role = aws_iam_role.lambda_consumer_role.name
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaDynamoDBExecutionRole" 
+}
