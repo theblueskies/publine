@@ -9,13 +9,13 @@ import (
 )
 
 type MyEvent struct {
-        Name string `json:"name"`
+	Name string `json:"name"`
 }
 
 func HandleRequest(ctx context.Context, event events.DynamoDBEvent) (string, error) {
-        return fmt.Sprintf("Hello world!"), nil
+	return fmt.Sprintf("Hello world!"), nil
 }
 
 func main() {
-        lambda.Start(HandleRequest)
+	lambda.Start(HandleRequest)
 }
