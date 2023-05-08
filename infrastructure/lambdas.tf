@@ -32,3 +32,25 @@ resource "aws_lambda_event_source_mapping" "runner_event_source" {
     }
   }
 }
+
+### Cron started Lambda
+data "archive_file" "cleaner_archive" {
+  source_file = "../lambdas/cleaner/main"
+  output_path = "../lambdas/cleaner/main.zip"
+  type        = "zip"
+}
+
+resource "aws_lambda_function" "cleaner" {
+  function_name = "ddb_cleaner"
+  role          = aws_iam_role.ddb_cleaner_role.arn
+  handler       = "main"
+  memory_size   = "128"
+  timeout       = 10
+  runtime       = "go1.x"
+  architectures = ["x86_64"]
+
+  filename         = data.archive_file.cleaner_archive.output_path
+  source_code_hash = data.archive_file.cleaner_archive.output_path
+
+  depends_on = [aws_iam_role.lambda_consumer_role]
+}
