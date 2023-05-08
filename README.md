@@ -15,7 +15,12 @@ This is the lambda (named runner) that ingests events from DynamoDB streams. The
 
 ## Deploy infrastructure  
 
-Prerequisite: Setup your AWS access key and secret in `~/.aws/credentials`
+Prerequisites:
+
+- Setup your AWS access key and secret in `~/.aws/credentials`
+- In your S3 account, create a bucket called `publinestate`. This name is currently hardcoded in [infrastructure/main.tf](https://github.com/theblueskies/publine/blob/main/infrastructure/main.tf#L11)
+
+Run the following -
 
 1. `export AWS_PROFILE=name_of_your_profile_in_aws_credentials`
 2. `terraform init`  
