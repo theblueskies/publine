@@ -31,3 +31,4 @@ These branches are in increasing order of development. After the first branch, t
 - 1.1: Update lambda function structure
 - 1.2: Attribute mapping from DynamoDB streamed event into Lambda
 - 1.3: Filter criteria on events before they are sent to the Lambda
+- 2.0: Lambda triggered as a cronjob by Cloudwatch Alarm
