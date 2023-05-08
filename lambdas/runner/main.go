@@ -20,8 +20,11 @@ func HandleRequest(ctx context.Context, ddbEvents events.DynamoDBEvent) (string,
 	sugar := logger.Sugar()
 	for _, e := range ddbEvents.Records {
 		sugar.Info("Got DDB record", e)
-		userId := e.Change.NewImage["userId"].String()
-		todoTitle := e.Change.NewImage["todoTitle"].String()
+		// The current filter pattern being applied only sends events to Lambda when eventName = REMOVE
+		// Filter pattern is defined in infrastucture/lambdas.tf
+		// e.Change.NewImage is nil because values get erased when item is deleted from DynamoDB
+		userId := e.Change.OldImage["userId"].String()
+		todoTitle := e.Change.OldImage["todoTitle"].String()
 
 		sugar.Info("userID: ", userId)
 		sugar.Info("todoTitle: ", todoTitle)
