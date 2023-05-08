@@ -22,3 +22,11 @@ Prerequisite: Setup your AWS access key and secret in `~/.aws/credentials`
 3. `terraform apply`  
 
 Note: A deploy of a lambda requires both the major steps listed above - building the lambda and then redoing `terraform apply`
+
+### Branch descriptions
+
+These branches are in increasing order of development. After the first branch, the others are pretty incremental in change
+
+- 1.0: Basic infrastructure setup and lambda deploy
+- 1.1: Update lambda function structure
+- 1.2: Attribute mapping from DynamoDB streamed event into Lambda
