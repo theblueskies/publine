@@ -14,7 +14,7 @@ type MyEvent struct {
 }
 
 // HandleRequest implements the core behaviors of the lambda
-func HandleRequest(ctx context.Context, ddbEvents events.DynamoDBEvent) (string, error) {
+func HandleRequest(ctx context.Context, cwEvents events.CloudWatchEvent) (string, error) {
 	logger, _ := zap.NewProduction()
 	defer logger.Sync() // flushes buffer, if any
 	sugar := logger.Sugar()
