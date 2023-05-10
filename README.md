@@ -37,3 +37,4 @@ These branches are in increasing order of development. After the first branch, t
 - 1.2: Attribute mapping from DynamoDB streamed event into Lambda
 - 1.3: Filter criteria on events before they are sent to the Lambda
 - 2.0: Lambda triggered as a cronjob by Cloudwatch Alarm
+- 2.1: Lambda named cleaner ensures that any item that should have been deleted because of TTL expiry is deleted
