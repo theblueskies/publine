@@ -37,7 +37,7 @@ func NewUserRepository(tableName string) (*UserRepository, error) {
 	return &UserRepository{svc: svc, tableName: tableName, logger: sugar}, nil
 }
 
-// BatchDeleteExpiredItems takes all items that should have beel deleted and enforces that delete
+// BatchDeleteExpiredItems takes all items that should have been deleted and enforces that delete
 func (u *UserRepository) BatchDeleteExpiredItems(ctx context.Context, cwEvent events.CloudWatchEvent) error {
 	expiryTime := cwEvent.Time.Unix()
 	filter := expression.Name("expiryTime").LessThan(expression.Value(expiryTime))
@@ -64,7 +64,7 @@ func (u *UserRepository) BatchDeleteExpiredItems(ctx context.Context, cwEvent ev
 
 	var wr []*dynamodb.WriteRequest
 	batchCount := 1
-	writtenCount := 0
+	batchSize := 0
 	for index, v := range result.Items {
 		userEntry := UserEntry{}
 		err := dynamodbattribute.UnmarshalMap(v, &userEntry)
@@ -84,9 +84,11 @@ func (u *UserRepository) BatchDeleteExpiredItems(ctx context.Context, cwEvent ev
 				},
 			}})
 
+		batchSize++
+
 		// Write batch request if it hits max batch limit or is the last element in the scan
-		if writtenCount == u.callLimit || index == int(*result.Count)-1 {
-			u.logger.Info("deleting batch ", map[string]int{"batch": batchCount, "batchSize": writtenCount})
+		if batchSize == u.callLimit || index == int(*result.Count)-1 {
+			u.logger.Info("deleting batch ", map[string]int{"batch": batchCount, "batchSize": batchSize})
 
 			input := &dynamodb.BatchWriteItemInput{
 				RequestItems: map[string][]*dynamodb.WriteRequest{
@@ -102,7 +104,8 @@ func (u *UserRepository) BatchDeleteExpiredItems(ctx context.Context, cwEvent ev
 
 			// reset the counts for the next batch
 			wr = nil
-			writtenCount = 0
+			batchSize = 0
+			batchCount++
 		}
 	}
 	return nil

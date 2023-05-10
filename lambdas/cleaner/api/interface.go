@@ -8,5 +8,5 @@ import (
 
 // Service defines the interface to get rates for a given time range
 type DBClean interface {
-	DeleteExpiredItems(context.Context, events.CloudWatchEvent) error
+	BatchDeleteExpiredItems(context.Context, events.CloudWatchEvent) error
 }
