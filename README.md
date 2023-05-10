@@ -4,6 +4,7 @@ Publine is a proof-of-concept for -
 
 1. DynamoDB events getting sent over the DynamoDB stream on TTL expiry
 2. an AWS Lambda ingesting events from a DynamoDB stream
+3. a second AWS Lambda that ensures that items are deleted on expiry and placed on Dynamodb stream
 
 There are two major steps to deploy - building the lambda and deploying the lambda alongwith DynamoDB and related infrastructure
 
@@ -37,4 +38,4 @@ These branches are in increasing order of development. After the first branch, t
 - 1.2: Attribute mapping from DynamoDB streamed event into Lambda
 - 1.3: Filter criteria on events before they are sent to the Lambda
 - 2.0: Lambda triggered as a cronjob by Cloudwatch Alarm
-- 2.1: Lambda named cleaner ensures that any item that should have been deleted because of TTL expiry is deleted
+- 2.1: Lambda named cleaner ensures that items are deleted on expiry and placed on Dynamodb stream
